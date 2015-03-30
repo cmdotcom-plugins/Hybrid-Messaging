@@ -1,5 +1,7 @@
 ### Hybrid Messaging SDK
-*By: CMTelecom.com*</br>*Version: 1.2.1*
+<sub>*By: CMTelecom.com*</sub>
+
+<sub>*Version: 1.2.1*</sub>
 
 **Find the complete documentation at:** </br>
 [http://www.cmtelecom.com/products/messaging/hybrid/sdk-documentation][1]
