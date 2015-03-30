@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.cmtelecom.example.activities.RegistrationActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <TextView android:id="@+id/lblSentTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginRight="36dp"
+        android:text="An activation code has been sent to your number 0624601873. Use the code below to activate your account."/>
+
+    <EditText android:id="@+id/tbPincode"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:inputType="number"
+        android:hint="Code"
+        android:textColorHighlight="@color/colorAccent" />
+
+
+    <TextView android:id="@+id/lblWrongNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="Sent to the wrong number?"/>
+
+
+</LinearLayout>

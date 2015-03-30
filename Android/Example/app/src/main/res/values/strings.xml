@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- App details -->
+    <string name="title_toolbar">Hybrid</string>
+    <string name="app_name">Hybrid Example</string>
+    <string name="app_version">1.0</string>
+
+    <!-- Layout labels -->
+    <string name="lbl_welcome_message">Logged in</string>
+    <string name="lbl_message_sent_to">An activation code has been sent to <br>%s</br>. Use the code below to activate your account.</string>
+
+    <!-- Menu -->
+    <string name="action_logout">Logout</string>
+
+    <!-- TODO: Fill in your credentials to test this example project -->
+    <string name="PROJECTID">Your google project id</string>
+    <string name="API_KEY" tools:ignore="TypographyDashes">Your HybridMessaging application key</string>
+    <string name="SECRET" tools:ignore="TypographyDashes">Your HybridMessaging application secret</string>
+
+</resources>
