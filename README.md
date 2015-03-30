@@ -4,7 +4,9 @@
 **Find the complete documentation at:** </br>
 [http://www.cmtelecom.com/products/messaging/hybrid/sdk-documentation][1]
 
-Import the SDK:
+
+
+### Import the SDK:
 
 #### Android Studio Project
 Use gradle to import the latest version of the SDK
