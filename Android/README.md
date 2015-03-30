@@ -25,3 +25,11 @@ When having conflicts with Google Play Services exclude the play services from t
 Download the .jar file from [http://www.cmtelecom.com/products/messaging/hybrid/sdk-documentation][1]
 
 [1]: http://www.cmtelecom.com/products/messaging/hybrid/sdk-documentation
+
+### example
+
+See the example project for more information on how to implement the SDK.
+By using your credentials gained from CM you can test the flow of using the HybridMessagingSDK for logging in.
+
+See the example project for more information on how to implement the SDK.
+By using your credentials gained from CM you can test the flow of using the HybridMessagingSDK for logging in.
