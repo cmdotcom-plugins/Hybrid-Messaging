@@ -16,7 +16,7 @@ import javax.crypto.spec.PBEParameterSpec;
 
 public class ObscuredSharedPreferences implements SharedPreferences {
     protected static final String UTF8 = "utf-8";
-    private static final char[] SEKRIT = "FcJubHiL2ltW7y".toCharArray();
+    private static final char[] SEKRIT = "random_seed".toCharArray();
 
     protected SharedPreferences delegate;
     protected Context context;
