@@ -6,8 +6,9 @@ import android.content.res.Resources;
 import android.support.v4.app.NotificationCompat;
 
 import com.cm.hybridmessagingsdk.HybridMessaging;
-import com.cm.hybridmessagingsdk.R;
 import com.cm.hybridmessagingsdk.listener.HybridNotificationListener;
+
+import java.util.Random;
 
 /**
  * NotificationUtil will take care of all notifications of the HybridMessagingSDK
@@ -18,17 +19,6 @@ import com.cm.hybridmessagingsdk.listener.HybridNotificationListener;
  * - The notifications can also be turned off
  */
 public class NotificationUtil {
-
-    private static final String sDefaultName = "Notification";
-
-    /* Indicates whether this class may throw notifications by its own. */
-    private boolean mFireNotification = true;
-
-    /* Title of the notification. By default its sDefaultName. */
-    private String  notificationTitle = sDefaultName;
-
-    /* Icon will be set by default to the application icon specified in the manifest */
-    private int icon;
 
     /* Notification listener will be fired when instantiated */
     public static HybridNotificationListener notificationListener;
@@ -46,9 +36,14 @@ public class NotificationUtil {
      * @param fire
      * @return
      */
+    private static String KEY_NOTIF_FIRE = "KEY_NOTIF_FIRE";
     public NotificationUtil fireNotificationByDefault(boolean fire) {
-        this.mFireNotification = fire;
+        PreferenceHandler.saveValueBoolean(mContext, KEY_NOTIF_FIRE, fire);
         return this;
+    }
+
+    public boolean getFireNotificationByDefault() {
+        return PreferenceHandler.getValueBoolean(mContext, KEY_NOTIF_FIRE);
     }
 
     /**
@@ -57,13 +52,23 @@ public class NotificationUtil {
      * @param name
      * @return
      */
+    private static String KEY_NOTIF_NAME = "NOTIF_NAME";
     public NotificationUtil setNotificationTitle(String name) {
-        this.notificationTitle = name;
+        PreferenceHandler.saveValueString(mContext, KEY_NOTIF_NAME, name);
         return this;
     }
 
+    public String getNotificationTitle() {
+        return PreferenceHandler.getValueString(mContext, KEY_NOTIF_NAME);
+    }
+
+    private static String KEY_NOTIF_ICON = "NOTIF_ICON";
     public void setNotificationIcon(int resourceId) {
-        this.icon = resourceId;
+        PreferenceHandler.saveValueInt(mContext, KEY_NOTIF_ICON, resourceId);
+    }
+
+    public int getNotificatonIcon() {
+        return PreferenceHandler.getValueInt(mContext, KEY_NOTIF_ICON);
     }
 
     /**
@@ -83,11 +88,10 @@ public class NotificationUtil {
      */
     public void handleNotification(Notification notification)
     {
-
         if(notificationListener != null) notificationListener.onReceiveHybridNotification(HybridMessaging.context, notification);
 
         // Check whether the project allows the NotificationUtil to fire a notification
-        if(!mFireNotification) {
+        if(!getFireNotificationByDefault()) {
              return; // do nothing
         }
 
@@ -95,8 +99,8 @@ public class NotificationUtil {
         // If it does match, retrieve the name of the app.
         if(mContext != null) {
             UserAgent userAgent = new UserAgent(mContext);
-            if (this.notificationTitle.equals(sDefaultName)) {
-                this.notificationTitle = userAgent.getAppName(); // Retrieve name of the app from the project implementing this SDK
+            if (getNotificationTitle() == null) {
+                setNotificationTitle(userAgent.getAppName()); // Retrieve name of the app from the project implementing this SDK
             }
         } else {
             throw new NullPointerException("No context specified for the SDK, please initialize the SDK");
@@ -116,22 +120,41 @@ public class NotificationUtil {
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // get icon of the project
-        if(icon == 0) {
+        if(getNotificatonIcon() == Integer.MIN_VALUE) {
             String name = UserAgent.getAppIcon(mContext);
             Resources resources = mContext.getResources();
-            icon = resources.getIdentifier(name, "drawable", mContext.getPackageName());
+            setNotificationIcon(resources.getIdentifier(name, "drawable", mContext.getPackageName()));
         }
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(mContext)
-                        .setContentTitle(notificationTitle)
-                        .setSmallIcon(icon)
+                        .setContentTitle(getNotificationTitle())
+                        .setSmallIcon(getNotificatonIcon())
                         .setContentText(notification.getMessage());
 
-        int count = notification.getNotificationId().length();
-        String notifId = notification.getNotificationId().substring(count - 6, count);
-        notificationManager.notify(Integer.valueOf(notifId), mBuilder.build());
+        notificationManager.notify(getNotificationId(notification), mBuilder.build());
     }
 
+    /*
+     * Get the notificationId from the notification object received from the HybridMessaging server.
+     * If the notificationId does not meet the criteria a new one will be created.
+     */
+    private int getNotificationId(Notification notification) {
+        // NotificationId Length
+        int count = notification.getNotificationId().length();
+        int seed = (int)Math.pow(10, 5); // 100k
+        int notificationId = 0;
 
+        String notifId = null;
+        try {
+            notifId = notification.getNotificationId().substring(count - 6, count);
+        } catch(Exception ex) { /* nothing */ }
+
+        try {
+            notificationId = Integer.valueOf(notifId);
+        } catch(Exception ex) {
+            notificationId = new Random().nextInt(seed);
+        }
+        return notificationId;
+    }
 }

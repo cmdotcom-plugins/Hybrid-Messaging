@@ -41,7 +41,6 @@ public class HybridMessaging {
     private static UserAgent mUserAgent;
     protected static NotificationUtil notificationUtil;
 
-
     // initialize //
 
     public HybridMessaging(Context context) {
@@ -106,6 +105,10 @@ public class HybridMessaging {
         PreferenceHandler.saveDeviceId(context, "");
         PreferenceHandler.saveMsisdn(context, "");
         PreferenceHandler.saveRegistrationId(context, "");
+    }
+
+    public static String getSDKVersion() {
+        return BuildConfig.VERSION_NAME;
     }
 
     /**

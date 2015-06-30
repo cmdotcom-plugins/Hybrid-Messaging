@@ -34,7 +34,7 @@ public class GCMNotificationIntentService extends IntentService {
 
         String messageType = gcm.getMessageType(intent);
 
-        NotificationUtil notificationUtil = HybridMessaging.notificationUtil;
+        NotificationUtil notificationUtil = new NotificationUtil(this);
 
         if (extras != null) {
             if (!extras.isEmpty()) {
@@ -43,8 +43,8 @@ public class GCMNotificationIntentService extends IntentService {
                     for (int i = 0; i < 5; i++) {
                         try {
                             Thread.sleep(200);
-                        } catch (InterruptedException e) {
                         }
+                        catch (InterruptedException e) {}
                     }
 
                     String messageId = null;

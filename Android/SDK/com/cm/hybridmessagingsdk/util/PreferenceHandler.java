@@ -35,6 +35,22 @@ public class PreferenceHandler {
         return getPreferences(context).getInt(key, Integer.MIN_VALUE);
     }
 
+    public static void saveValueBoolean(Context context, String key, boolean value) {
+        getPreferences(context).edit().putBoolean(key, value).commit();
+    }
+
+    protected static boolean getValueBoolean(Context context, String key) {
+        return getPreferences(context).getBoolean(key, false);
+    }
+
+    public static void saveValueString(Context context, String key, String value) {
+        getPreferences(context).edit().putString(key, value).commit();
+    }
+
+    protected static String getValueString(Context context, String key) {
+        return getPreferences(context).getString(key, null);
+    }
+
     public static void saveMsisdn(Context context, String msisdn) {
         getPreferences(context).edit().putString(sPreference_value_msisdn,msisdn).commit();
     }
@@ -60,4 +76,6 @@ public class PreferenceHandler {
         return getPreferences(context).getString(sPreference_value_deviceid, "");
 
     }
+
+
 }
