@@ -1,6 +1,7 @@
 package com.cm.hybridmessagingsdk.util;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -48,11 +49,13 @@ public class UserAgent {
             return app_name;
         }
 
-        // Retrieve app name from the manifest of the application integrating the SDK
-        String name = mContext.getString(mContext.getApplicationInfo().labelRes); // Get label of application from manifest
-
-        // No name found, must be specified by user itself
-        if(name == null) throw new NullPointerException("No application name found in manifest, please specify in a custom UserAgent to the SDK");
+        PackageManager packageManager = mContext.getPackageManager();
+        ApplicationInfo applicationInfo = null;
+        try {
+            applicationInfo = packageManager.getApplicationInfo(mContext.getApplicationInfo().packageName, 0);
+        } catch (final PackageManager.NameNotFoundException e) {
+        }
+        String name =  (String) (applicationInfo != null ? packageManager.getApplicationLabel(applicationInfo) : "Unknown");
 
         return name;
     }
